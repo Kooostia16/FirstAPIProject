@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class CompanyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
 
     String companyName;
@@ -56,5 +56,15 @@ public class CompanyEntity {
     @Id
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanyEntity{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", price='" + price + '\'' +
+                ", volume='" + volume + '\'' +
+                '}';
     }
 }
