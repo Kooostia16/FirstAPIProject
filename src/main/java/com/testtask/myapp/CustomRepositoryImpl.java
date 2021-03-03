@@ -11,7 +11,7 @@ public class CustomRepositoryImpl implements CustomRepository{
 
     @Override
     public List<CompanyEntity> findCompaniesByPricesLimitTo(int limit) {
-        return entityManager.createQuery("SELECT ce FROM CompanyEntity ce ORDER BY ce.price",
+        return entityManager.createQuery("SELECT ce FROM CompanyEntity ce ORDER BY ce.price DESC",
                 CompanyEntity.class).setMaxResults(limit).getResultList();
     }
 
