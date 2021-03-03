@@ -24,8 +24,8 @@ public class CustomRepositoryImpl implements CustomRepository{
     }
 
     @Override
-    public void deleteCompanyWithName(String name) {
-        entityManager.createQuery("DELETE from CompanyEntity ce WHERE ce.companyName="+name);
+    public void deleteCompanyWithSymbol(String name) {
+        entityManager.createQuery("DELETE from CompanyEntity ce WHERE ce.symbol="+name);
     }
 
 

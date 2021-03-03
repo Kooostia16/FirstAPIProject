@@ -82,8 +82,8 @@ public class MyAppApplication {
                         cVol = vol2;
                     }
 
-                    ce = new CompanyEntity(name, String.valueOf(percentChange), cVol);
-                    repo.deleteCompanyWithName(ce.getCompanyName());
+                    ce = new CompanyEntity(name, String.valueOf(percentChange), cVol,s);
+                    repo.deleteCompanyWithSymbol(ce.getSymbol());
                     repo.save(ce);
                 } catch (Exception e) {
 
