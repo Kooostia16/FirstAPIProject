@@ -1,4 +1,6 @@
-package com.testtask.myapp;
+package com.testtask.myapp.repositories;
+
+import com.testtask.myapp.CompanyEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,4 +22,11 @@ public class CustomRepositoryImpl implements CustomRepository{
         return entityManager.createQuery("SELECT ce FROM CompanyEntity ce ORDER BY ce.volume",
                 CompanyEntity.class).setMaxResults(limit).getResultList();
     }
+
+    @Override
+    public void deleteCompanyWithName(String name) {
+        entityManager.createQuery("DELETE from CompanyEntity ce WHERE ce.companyName="+name);
+    }
+
+
 }

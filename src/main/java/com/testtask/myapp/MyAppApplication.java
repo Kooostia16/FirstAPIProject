@@ -2,6 +2,7 @@ package com.testtask.myapp;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testtask.myapp.repositories.MyRepository;
 import com.testtask.myapp.urls.APIUrls;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,12 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
 public class MyAppApplication {
 
     static MyRepository repo;
+    static long timePassed;
+    static boolean showPriceQuery = true;
 
     @Autowired
     public void setRepo(MyRepository rep) {
@@ -79,23 +83,41 @@ public class MyAppApplication {
                     }
 
                     ce = new CompanyEntity(name, String.valueOf(percentChange), cVol);
+                    repo.deleteCompanyWithName(ce.getCompanyName());
                     repo.save(ce);
                 } catch (Exception e) {
 
                 }
 
-                List<CompanyEntity> cL = repo.findCompaniesByPricesLimitTo(5);
-                System.out.println("id | companyName | priceChangePercent | volume");
-                for (CompanyEntity c: cL) {
-                    System.out.println(0 +
-                            " | "+ c.getCompanyName() +
-                            " | "+ c.getPrice() +" | "+
-                            c.getVolume());
+                System.out.println("\033[H\033[2J");
+                System.out.println("\033[H\033[2J");
+
+                if (showPriceQuery) {
+                    List<CompanyEntity> cL = repo.findCompaniesByPricesLimitTo(5);
+                    System.out.println("id | companyName | priceChangePercent | volume");
+                    for (CompanyEntity c: cL) {
+                        System.out.println(0 +
+                                " | "+ c.getCompanyName() +
+                                " | "+ c.getPrice() +" | "+
+                                c.getVolume());
+                    }
+                } else {
+                    List<CompanyEntity> cL = repo.findCompaniesByVolumeLimitTo(5);;
+                    System.out.println("id | companyName | priceChangePercent | volume");
+                    for (CompanyEntity c: cL) {
+                        System.out.println(0 +
+                                " | "+ c.getCompanyName() +
+                                " | "+ c.getPrice() +" | "+
+                                c.getVolume());
+                    }
+                }
+
+                if (new Date().getTime() - timePassed > 5000) {
+                    timePassed = new Date().getTime();
+                    showPriceQuery = !showPriceQuery;
                 }
 
             }
-            repo.findCompaniesByVolumeLimitTo(5);
         }
     }
-
 }
