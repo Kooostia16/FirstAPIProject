@@ -3,10 +3,9 @@ package com.testtask.myapp;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,14 +19,18 @@ public class CompanyEntity {
 
     private String companyName;
     private String price;
-    private String volume;
+    private String priceChange;
+    private long volume;
     private String symbol;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
-    public CompanyEntity(String companyName, String price, String volume, String symbol) {
+    public CompanyEntity(String companyName, String price, long volume, String symbol, Date date) {
         this.companyName = companyName;
         this.price = price;
         this.volume = volume;
         this.symbol = symbol;
+        this.date = date;
     }
 
     protected CompanyEntity() {
@@ -35,11 +38,6 @@ public class CompanyEntity {
 
     @Override
     public String toString() {
-        return "CompanyEntity{" +
-                "id=" + id +
-                ", companyName='" + companyName + '\'' +
-                ", price='" + price + '\'' +
-                ", volume='" + volume + '\'' +
-                '}';
+        return id + " | " + companyName + " | " + price + " | " + volume;
     }
 }
